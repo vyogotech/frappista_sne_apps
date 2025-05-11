@@ -1,0 +1,12 @@
+tasks:
+  - name: Start ERPNext Environment
+    init: |
+      echo "Preparing ERPNext environment..."
+    command: |
+      docker-compose -f compose.yml up
+
+ports:
+  - port: 8000
+    onOpen: open-preview
+  - port: 9000
+    onOpen: ignore

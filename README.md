@@ -1,3 +1,5 @@
+# Frappista SNE - Single Node Environment for ERPNext Development
+
 ## Why Frappista SNE?
 
 Developing for ERPNext can often involve complex setup processes that consume valuable time and resources. As developers and contributors, we at Vyogo Technology recognized this challenge and set out to create a solution that would streamline the development workflow. Today, I'm excited to share our contribution to the ERPNext ecosystem: the Single Node Environment (SNE) for development purposes.
@@ -11,26 +13,22 @@ The Single Node Environment (SNE) is a specialized Docker container solution des
 ### 1. Pre-installed and Ready to Run
 Unlike other solutions that require additional configuration after pulling the image, SNE containers are completely pre-installed. When the container starts, the bench automatically launches with dev.localhost, allowing you to begin development immediately.
 
-### 2. Custom App creation
+### 2. Custom App Creation
 
-# 🛠️ Frappe Custom App Creator Utility
+#### 🛠️ Frappe Custom App Creator Utility
 
 This utility simplifies the process of creating and managing Frappe custom apps using a Docker-based setup with the `vyogo/erpnext:sne-version-15` image.
 
-## 🚀 Features
+##### 🚀 Features
 
 - Create a new Frappe app inside the container and mount it locally
 - Automatically update your `compose.yml` file to include volume mounts
 - Interactive app creation using `bench new-app`
 - Optional mode to just update the compose file without creating the app
 
----
-
-## 🐧 Linux/macOS (Recommended)
+##### 🐧 Linux/macOS Usage (Recommended)
 
 Use the `create_custom_frappe_app.sh` script:
-
-### ✅ Usage
 
 ```bash
 # Create a new Frappe app and optionally update compose.yml
@@ -38,7 +36,20 @@ Use the `create_custom_frappe_app.sh` script:
 
 # Only update compose.yml to mount an already created app
 ./create_custom_frappe_app.sh my_app --compose-update-only
+```
 
+**Prerequisites:**
+- Docker installed and running
+- `create_custom_frappe_app.sh` script in your project directory
+- Appropriate permissions to execute the script (`chmod +x create_custom_frappe_app.sh`)
+
+**What the script does:**
+1. Checks if the app directory already exists locally
+2. Creates a temporary container from the SNE image
+3. Runs `bench new-app` inside the container to create your app
+4. Copies the created app to your local directory
+5. Updates your `compose.yml` file with the necessary volume mounts
+6. Cleans up the temporary container
 
 ### 3. Easy Custom App Mounting
 SNE facilitates easy mounting of custom apps, making it ideal for developers working on multiple apps simultaneously.
@@ -100,6 +111,7 @@ Start your development environment with:
 ```bash
 docker-compose up
 ```
+
 This approach is particularly useful for teams working on custom apps as it ensures everyone has the same development environment while allowing local changes to be immediately reflected in the running container.
 
 ## GitPod Based Remote Environments
@@ -143,6 +155,7 @@ ports:
 tasks:
   - init: echo "Environment ready!"
     command: /usr/libexec/s2i/run
+```
 
 ### Customizing Your Build
 

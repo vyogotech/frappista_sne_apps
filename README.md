@@ -31,25 +31,36 @@ This utility simplifies the process of creating and managing Frappe custom apps 
 Use the `create_custom_frappe_app.sh` script:
 
 ```bash
-# Create a new Frappe app and optionally update compose.yml
+# Using Docker (default)
 ./create_custom_frappe_app.sh my_app
 
-# Only update compose.yml to mount an already created app
+# Using Podman
+./create_custom_frappe_app.sh my_app --podman
+
+# Only update compose.yml to mount an already created app (Docker)
 ./create_custom_frappe_app.sh my_app --compose-update-only
+
+# Only update compose.yml to mount an already created app (Podman)
+./create_custom_frappe_app.sh my_app --compose-update-only --podman
 ```
 
 **Prerequisites:**
-- Docker installed and running
+- Either Docker or Podman installed and running
 - `create_custom_frappe_app.sh` script in your project directory
 - Appropriate permissions to execute the script (`chmod +x create_custom_frappe_app.sh`)
 
 **What the script does:**
-1. Checks if the app directory already exists locally
-2. Creates a temporary container from the SNE image
-3. Runs `bench new-app` inside the container to create your app
-4. Copies the created app to your local directory
-5. Updates your `compose.yml` file with the necessary volume mounts
-6. Cleans up the temporary container
+1. Detects whether to use Docker or Podman (based on `--podman` flag or availability)
+2. Checks if the app directory already exists locally
+3. Creates a temporary container from the SNE image using your chosen container runtime
+4. Runs `bench new-app` inside the container to create your app
+5. Copies the created app to your local directory
+6. Updates your `compose.yml` file with the necessary volume mounts
+7. Cleans up the temporary container
+
+**Container Runtime Support:**
+- **Docker**: Default container runtime (uses `docker` commands)
+- **Podman**: Alternative container runtime (uses `podman` commands when `--podman` flag is specified)
 
 ### 3. Easy Custom App Mounting
 SNE facilitates easy mounting of custom apps, making it ideal for developers working on multiple apps simultaneously.
@@ -79,11 +90,12 @@ SNE leverages Source-to-Image (s2i) based builds to create these pre-configured 
 
 ### Quick Start
 
-#### Using Docker
+#### Using Docker or Podman
 
 Pull the appropriate image based on your needs:
 
 ```bash
+# Using Docker
 # For ERPNext v15
 docker pull vyogo/erpnext:sne-version-15
 
@@ -92,24 +104,46 @@ docker pull vyogo/erpnext:sne-develop
 
 # For the latest stable release
 docker pull vyogo/erpnext:sne-latest
+
+# Using Podman
+# For ERPNext v15
+podman pull vyogo/erpnext:sne-version-15
+
+# For the development branch
+podman pull vyogo/erpnext:sne-develop
+
+# For the latest stable release
+podman pull vyogo/erpnext:sne-latest
 ```
 
 Run the container:
 
 ```bash
+# Using Docker
 docker run -p 8000:8000 -p 9000:9000 vyogo/erpnext:sne-version-15
+
+# Using Podman
+podman run -p 8000:8000 -p 9000:9000 vyogo/erpnext:sne-version-15
 ```
 
 Once started, access your development environment at http://dev.localhost:8000
 
-#### Using Docker Compose
+#### Using Docker Compose or Podman Compose
 
-For a more streamlined setup, especially when mounting custom apps for development, you can use Docker Compose. Copy the `compose.yml` file to your app root and replace `{custom_appname}` with the name of your custom app. This configuration mounts your local app directory into the container's apps directory, enabling real-time development.
+For a more streamlined setup, especially when mounting custom apps for development, you can use Docker Compose or Podman Compose. Copy the `compose.yml` file to your app root and replace `{custom_appname}` with the name of your custom app. This configuration mounts your local app directory into the container's apps directory, enabling real-time development.
 
 Start your development environment with:
 
 ```bash
+# Using Docker Compose
 docker-compose up
+# or
+docker compose up
+
+# Using Podman Compose
+podman-compose up
+# or
+podman compose up
 ```
 
 This approach is particularly useful for teams working on custom apps as it ensures everyone has the same development environment while allowing local changes to be immediately reflected in the running container.

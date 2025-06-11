@@ -1,8 +1,8 @@
 services:
-  frappe-sne:
+  frappe-snea:
     image: docker.io/vyogo/erpnext:sne-latest
     ports:
       - "8000:8000"
     volumes:
-      - ./:/home/frappe/frappe-bench/apps/{YOUR_APP_NAME}
+      - ./apps/my_app2:/home/frappe/frappe-bench/apps/my_app2
     entrypoint: /usr/libexec/s2i/run

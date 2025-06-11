@@ -11,10 +11,39 @@ The Single Node Environment (SNE) is a specialized Docker container solution des
 ### 1. Pre-installed and Ready to Run
 Unlike other solutions that require additional configuration after pulling the image, SNE containers are completely pre-installed. When the container starts, the bench automatically launches with dev.localhost, allowing you to begin development immediately.
 
-### 2. Easy Custom App Mounting
+### 2. Custom App creation
+
+# 🛠️ Frappe Custom App Creator Utility
+
+This utility simplifies the process of creating and managing Frappe custom apps using a Docker-based setup with the `vyogo/erpnext:sne-version-15` image.
+
+## 🚀 Features
+
+- Create a new Frappe app inside the container and mount it locally
+- Automatically update your `compose.yml` file to include volume mounts
+- Interactive app creation using `bench new-app`
+- Optional mode to just update the compose file without creating the app
+
+---
+
+## 🐧 Linux/macOS (Recommended)
+
+Use the `create_custom_frappe_app.sh` script:
+
+### ✅ Usage
+
+```bash
+# Create a new Frappe app and optionally update compose.yml
+./create_custom_frappe_app.sh my_app
+
+# Only update compose.yml to mount an already created app
+./create_custom_frappe_app.sh my_app --compose-update-only
+
+
+### 3. Easy Custom App Mounting
 SNE facilitates easy mounting of custom apps, making it ideal for developers working on multiple apps simultaneously.
 
-### 3. Gitpod Integration
+### 4. Gitpod Integration
 We've designed SNE to work seamlessly with Gitpod, enabling cloud-based development environments that are consistent across your team.
 
 ## How SNE Differs from Other Solutions

@@ -100,7 +100,7 @@ docker run --rm -it ^
     --name %CONTAINER_NAME% ^
     -v "%LOCAL_APP_PATH%:/home/frappe/frappe-bench/apps/%APP_NAME%" ^
     %IMAGE% ^
-    bash -c "set -e; su - frappe -c 'cd %BENCH_DIR% && bench new-app %APP_NAME%'"
+    bash -c "set -e; cd %BENCH_DIR% && bench new-app %APP_NAME%"
 
 echo.
 echo ✅ App '%APP_NAME%' created.

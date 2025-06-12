@@ -116,11 +116,9 @@ $CONTAINER_ENGINE run --rm -it \
   -v "$LOCAL_APP_PATH:$APPS_DIR/$APP_NAME" \
   "$IMAGE" \
   bash -c "
-    set -e
-    su - frappe -c '
+      set -e
       cd $BENCH_DIR &&
       bench new-app $APP_NAME
-    '
   "
 
 echo ""
